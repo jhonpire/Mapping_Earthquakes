@@ -40,3 +40,50 @@ streets.addTo(map);
 
 //  Add a marker to the map for Los Angeles, California.
 let marker = L.marker([34.0522, -118.2437]).addTo(map);
+
+// Add GeoJSON data.
+let sanFranAirport =
+{
+    "type": "FeatureCollection", "features": [{
+        "type": "Feature",
+        "properties": {
+            "id": "3469",
+            "name": "San Francisco International Airport",
+            "city": "San Francisco",
+            "country": "United States",
+            "faa": "SFO",
+            "icao": "KSFO",
+            "alt": "13",
+            "tz-offset": "-8",
+            "dst": "A",
+            "tz": "America/Los_Angeles"
+        },
+        "geometry": {
+            "type": "Point",
+            "coordinates": [-122.375, 37.61899948120117]
+        }
+    }
+    ]
+};
+
+// pointToLayer example
+// L.geoJson(data, {
+//     pointToLayer: function(feature, latlng) {
+//       return L.marker(latlng);
+//      }
+// });
+
+// // Grabbing our GeoJSON data.
+// L.geoJSON(sanFranAirport, {
+//     pointToLayer: function(feature, latlng){
+//         return L.circleMarker(latlng)
+//         .bindPopup("<h2>" + feature.properties.city + "</h2>");
+//     }
+// }).addTo(map);
+
+// OnEach
+L.geoJSON(sanFranAirport, {
+    onEachFeature: function (feature, layer) {
+        layer.bindPopup("<h2>" + feature.properties.city + "</h2>" + "<hr>" + "<br>" + feature.properties.faa);
+    }
+}).addTo(map);
